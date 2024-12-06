@@ -1,4 +1,3 @@
-// # Código da função "doar_para_vitimas"
 #include "doacoes.h"
 
 void doar_para_vitimas(GtkWidget *widget, gpointer data) {
@@ -15,8 +14,8 @@ void doar_para_vitimas(GtkWidget *widget, gpointer data) {
         "3) Roupas e Cobertores:\n"
         "   - Doações podem ser feitas nas ONGs locais ou na Cruz Vermelha.\n\n"
         "4) Voluntariado:\n"
-        "   - Cadastre-se no site oficial da Defesa Civil RS.\n\n"
-        "Obrigado por sua ajuda!"
+        "   - Cadastre-se no site oficial da Defesa Civil RS https://defesacivil.rs.gov.br/inicial.\n\n"
+        "Obrigado por sua ajuda!" 
     );
 
     gtk_dialog_run(GTK_DIALOG(dialog));

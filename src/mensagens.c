@@ -23,8 +23,11 @@ void enviar_mensagens_apoio(GtkWidget *widget, gpointer data) {
     // Campo para idade
     label = gtk_label_new("Digite a idade do destinatário:");
     gtk_grid_attach(GTK_GRID(grid), label, 0, 0, 1, 1);
-    idade_spin = gtk_spin_button_new_with_range(1, 120, 1);
+    idade_spin = gtk_spin_button_new_with_range(1, 120, 1);  // Definindo intervalo de 1 a 120 anos
     gtk_grid_attach(GTK_GRID(grid), idade_spin, 1, 0, 1, 1);
+
+    // Passar o widget idade_spin para o callback
+    g_object_set_data(G_OBJECT(dialog), "idade_spin", idade_spin);
 
     // Botões
     button_ok = gtk_button_new_with_label("OK");
@@ -44,10 +47,9 @@ void enviar_mensagens_apoio(GtkWidget *widget, gpointer data) {
 
 // Função para tratar a mensagem quando o botão OK for pressionado
 void on_ok_clicked_mensagem(GtkWidget *button, gpointer dialog) {
-    GtkWidget *grid = gtk_widget_get_parent(button);
-    GtkWidget *idade_spin = g_object_get_data(G_OBJECT(grid), "idade_spin");
+    GtkWidget *idade_spin = g_object_get_data(G_OBJECT(dialog), "idade_spin");  // Obter o widget de idade_spin
 
-    int idade = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(idade_spin));
+    int idade = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(idade_spin));  // Obter o valor da idade
 
     char mensagem[256];
 
