@@ -9,6 +9,31 @@
 #define API_KEY "757b97253f0e0a914026b54068de55d7"  // Sua API Key
 #define API_URL "http://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&units=metric"
 
+// Dicionário de traduções de condições climáticas
+const char *traducao_clima(const char *descricao) {
+    if (strcmp(descricao, "clear sky") == 0) {
+        return "Céu limpo";
+    } else if (strcmp(descricao, "few clouds") == 0) {
+        return "Poucas nuvens";
+    } else if (strcmp(descricao, "scattered clouds") == 0) {
+        return "Nuvens dispersas";
+    } else if (strcmp(descricao, "broken clouds") == 0) {
+        return "Nuvens quebradas";
+    } else if (strcmp(descricao, "shower rain") == 0) {
+        return "Chuva forte";
+    } else if (strcmp(descricao, "rain") == 0) {
+        return "Chuva";
+    } else if (strcmp(descricao, "thunderstorm") == 0) {
+        return "Trovoada";
+    } else if (strcmp(descricao, "snow") == 0) {
+        return "Neve";
+    } else if (strcmp(descricao, "mist") == 0) {
+        return "Nevoeiro";
+    } else {
+        return descricao;  // Caso não haja tradução, retorna a descrição original
+    }
+}
+
 struct MemoryStruct {
     char *memory;
     size_t size;
@@ -86,11 +111,14 @@ void get_weather(const char *cidade, GtkWidget *label_resultado) {
 
             const char *weather_description = json_object_get_string(json_object_object_get(weather_main, "description"));
 
+            // Traduzir a descrição do clima para português
+            const char *clima_traduzido = traducao_clima(weather_description);
+
             // Exibir as informações no GtkLabel
             char resultado[256];
             snprintf(resultado, sizeof(resultado),
                      "Temperatura: %.2f °C\nUmidade: %d%%\nCondição climática: %s",
-                     json_object_get_double(temp), json_object_get_int(humidity), weather_description);
+                     json_object_get_double(temp), json_object_get_int(humidity), clima_traduzido);
 
             gtk_label_set_text(GTK_LABEL(label_resultado), resultado);
 
