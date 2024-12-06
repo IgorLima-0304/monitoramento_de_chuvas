@@ -1,0 +1,5 @@
+Cidade: Porto Alegre | Data: 01/01 | Previsão: Chuva moderada
+Cidade: Porto Alegre | Data: 02/01 | Previsão: Chuva moderada
+Cidade: Santa Maria | Data: 01/06 | Previsão: Tempo instável
+Cidade: Santa Maria | Data: 01/01 | Previsão: Tempo instável
+Cidade: Porto Alegre | Data: 01/01 | Previsão: Chuva moderada
