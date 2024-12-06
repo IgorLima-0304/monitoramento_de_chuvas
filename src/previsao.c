@@ -16,15 +16,15 @@ const char *traducao_clima(const char *descricao) {
     } else if (strcmp(descricao, "few clouds") == 0) {
         return "Poucas nuvens";
     } else if (strcmp(descricao, "scattered clouds") == 0) {
-        return "Nuvens dispersas";
+        return "Parcialmente nublado";
     } else if (strcmp(descricao, "broken clouds") == 0) {
-        return "Nuvens quebradas";
+        return "Nublado";
     } else if (strcmp(descricao, "shower rain") == 0) {
         return "Chuva forte";
     } else if (strcmp(descricao, "rain") == 0) {
         return "Chuva";
     } else if (strcmp(descricao, "thunderstorm") == 0) {
-        return "Trovoada";
+        return "Tempestade";
     } else if (strcmp(descricao, "snow") == 0) {
         return "Neve";
     } else if (strcmp(descricao, "mist") == 0) {
