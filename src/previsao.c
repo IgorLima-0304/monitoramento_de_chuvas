@@ -9,7 +9,7 @@
 #define API_KEY "757b97253f0e0a914026b54068de55d7"  // Sua API Key
 #define API_URL "http://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&units=metric"
 
-// Dicionário de traduções de condições climáticas
+// tradução do clima
 const char *traducao_clima(const char *descricao) {
     if (strcmp(descricao, "clear sky") == 0) {
         return "Céu limpo";
@@ -19,6 +19,8 @@ const char *traducao_clima(const char *descricao) {
         return "Parcialmente nublado";
     } else if (strcmp(descricao, "broken clouds") == 0) {
         return "Nublado";
+    } else if (strcmp(descricao, "overcast clouds") == 0) {
+        return "Céu completamente nublado";  
     } else if (strcmp(descricao, "shower rain") == 0) {
         return "Chuva forte";
     } else if (strcmp(descricao, "rain") == 0) {
@@ -30,16 +32,17 @@ const char *traducao_clima(const char *descricao) {
     } else if (strcmp(descricao, "mist") == 0) {
         return "Nevoeiro";
     } else {
-        return descricao;  // Caso não haja tradução, retorna a descrição original
+        return descricao;  // caso não haja tradução, retorna a descrição original
     }
 }
+
 
 struct MemoryStruct {
     char *memory;
     size_t size;
 };
 
-// Função para armazenar a resposta da API
+// Armazena a resposta da API
 static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp) {
     size_t realsize = size * nmemb;
     struct MemoryStruct *mem = (struct MemoryStruct *)userp;
@@ -57,7 +60,7 @@ static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, voi
     return realsize;
 }
 
-// Função para pegar dados do clima e exibir a previsão
+// pega dados do clima e exibe a previsão
 void get_weather(const char *cidade, GtkWidget *label_resultado) {
     CURL *curl;
     CURLcode res;
@@ -65,34 +68,34 @@ void get_weather(const char *cidade, GtkWidget *label_resultado) {
     chunk.memory = malloc(1);
     chunk.size = 0;
 
-    // Codificar a cidade para URL
+    // codifica a cidade para URL
     char *cidade_codificada = curl_easy_escape(curl, cidade, 0);
 
-    // Formatar a URL com o nome da cidade codificada e a chave da API
+    // formata a URL com o nome da cidade codificada e a chave da API
     char url[512];
     snprintf(url, sizeof(url), "http://api.openweathermap.org/data/2.5/weather?q=%s&appid=%s&units=metric", cidade_codificada, API_KEY);
 
-    // Imprimir a URL gerada para depuração
+    // Imprime a URL gerada para depuração
     printf("URL Gerada: %s\n", url);
 
-    // Inicializar a biblioteca curl
+    // inicializa a biblioteca curl
     curl_global_init(CURL_GLOBAL_DEFAULT);
     curl = curl_easy_init();
 
     if(curl) {
-        // Configurar a URL para fazer a requisição
+        // configura a URL para fazer a requisição
         curl_easy_setopt(curl, CURLOPT_URL, url);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&chunk);
 
-        // Fazer a requisição
+        // fazer a requisição
         res = curl_easy_perform(curl);
 
-        // Verificar se houve erro na requisição
+        // verificar se houve erro na requisição
         if(res != CURLE_OK) {
             fprintf(stderr, "curl_easy_perform() falhou: %s\n", curl_easy_strerror(res));
         } else {
-            // Processar a resposta JSON
+            // processar a resposta JSON
             struct json_object *parsed_json;
             struct json_object *main;
             struct json_object *temp;
